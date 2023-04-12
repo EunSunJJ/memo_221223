@@ -19,8 +19,8 @@ public class UserController {
 	// 회원가입 페이지 -> 중간에 껴들어가는 페이지만 교체해주기
 	//   http://localhost/user/sign_up_view
 	@GetMapping("/sign_up_view")
-	public String singUpView(Model model) {
-		model.addAttribute("user", "view/signUp");
+	public String signUpView(Model model) {
+		model.addAttribute("view", "user/signUp");
 		return "template/layout";
 	}
 }

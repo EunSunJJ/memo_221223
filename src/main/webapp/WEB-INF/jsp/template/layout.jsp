@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>MEMO 게시판</title>
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
@@ -15,18 +15,21 @@
 <!--  내가만든 스타일시트 -->
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
+
 <body>
-	<div id="wrap" class="bg-dark">
-		<header class="bg-success">
+	<div id="wrap">
+		<header class="d-flex justify-content-center align-items-center">
 			<%-- 상대 경로 --%>
-			<jsp:include page="../include/header.jsp">
+			<jsp:include page="../include/header.jsp"/>
 		</header>
-		<section class="contents bg-info">
-			<%-- <jsp:include page="../${view}.jsp"> --%>
+		
+		<section class="contents">
+			<jsp:include page="../${view}.jsp"/> 
 		</section>
-		<footer class="bg-success">
+		
+		<footer class="">
 			<%-- 절대 경로 --%>
-			<jsp:include page="/WEB-INF/jsp/include/footer.jsp">
+			<jsp:include page="/WEB-INF/jsp/include/footer.jsp"/>
 		</footer>
 	</div>
 </body>
