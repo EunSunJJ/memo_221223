@@ -10,7 +10,7 @@
 	<div id="wrap">
 		<div class="sign-up-logo">회원가입</div>
 		<div class="sign-up-box d-flex align-items-center justify-content-center">
-			<form id="signUpForm" method="post" action="/user/sign_up">
+			<form id="signUpForm" name="signUpForm"  method="post" action="/user/sign_up">
 				
 				<div class="form-group d-flex align-items-center">
 					<span class="sign-up-subject">아이디</span>
@@ -28,25 +28,25 @@
 							
 				<div class="form-group d-flex align-items-center">
 					<span class="sign-up-subject">비밀번호</span>
-					<input type="text" name="password" class="form-control col-8" placeholder="비밀번호를 입력해주세요">
+					<input type="text" id="password" name="password" class="form-control col-8" placeholder="비밀번호를 입력해주세요">
 				</div>
 				
 								
 				<div class="form-group d-flex align-items-center">
 					<span class="sign-up-subject">비밀번호 확인</span>
-					<input type="text" name="password" class="form-control col-8" placeholder="비밀번호를 입력해주세요">
+					<input type="text" id="passwordCheck" name="passwordCheck" class="form-control col-8" placeholder="비밀번호를 입력해주세요">
 				</div>
 		
 								
 				<div class="form-group d-flex align-items-center">
 					<span class="sign-up-subject">이름</span>
-					<input type="text" name="name" class="form-control col-7" placeholder="이름을 입력해주세요">
+					<input type="text" id="name" name="name" class="form-control col-7" placeholder="이름을 입력해주세요">
 				</div>
 								
 								
 				<div class="form-group d-flex align-items-center">
 					<span class="sign-up-subject">이메일 주소</span>
-					<input type="text" name="email" class="form-control col-9" placeholder="이메일을 입력해주세요">
+					<input type="text" id="email" name="email" class="form-control col-9" placeholder="이메일을 입력해주세요">
 				</div>
 				
 				<br>
@@ -97,6 +97,81 @@ $(document).ready(function(){
 			
 			
 		});
+	});
+	
+	// 회원가입
+	$("#signUpForm").on("submit", function(e){
+		e.preventDefault();  // submit기능 중단 -> 화면이동x
+		// alert("submit");
+	
+	// validation
+	let loginId = $("#loginId").val().trim();
+	let password = $("#password").val();
+	let passwordCheck = $("#passwordCheck").val();
+	let name = $("#name").val().trim();
+	let email = $("#email").val().trim();
+	
+	// 값이 있는지 없는지 순차적으로 체그 -> if문으로 
+	if (!loginId) {
+		alert("아이디를 입력하세요");
+		return false;
+	}
+	
+	if (!password || !passwordCheck) {
+		alert("비밀번호를 입력하세요");
+		return false;
+	}
+	
+	// 오타체크를 위해 서버키고 alert창 뜨는지 확인하기 (중간중간 확인)
+	
+	// password != passwordCheck
+	if (password != passwordCheck) {
+		alert("비밀번호가 일치하지 않습니다");
+		return false;
+	}
+	
+	if (!name) {
+		alert("이름을 입력하세요")
+		return false;
+	}
+	
+	if (!email) {
+		alert("이메일을 입력하세요")
+		return false;
+	}
+	
+	// validation끝 -> 중복확인
+	// 사용가능한 ID입니다 라는 문구가 나와야 가입가능
+	
+	// 아이디 중복확인 완료 됬는지 확인 -> passwordCheck d-none이 있으면 alert
+	if ($("#passwordCheck").hasClass("d-none")) {
+		alert("아이디 중복확인을 다시 해주세요");
+		return false;
+		}
+	
+	// 보낼준비 끝 -> AJAX
+	let url = $(this).attr("action");
+	console.log(url);
+	
+	let params = $(this).serialize();  // form태그에 있는 name 속성값들로 파라미터 구성
+	// 내가 파라미터 다 만들기 귀찮으면 이런식으로도 할 수 있다
+	console.log(params);
+	
+	$.post(url, params)  // request정보
+	.done(function(data){  // success에 대한 callback함수 
+		
+		// response
+		if (data.code == 1) {  // 성공
+			alert("가입을 환영합니다. 로그인을 해주세요")
+		
+			// 화면이동 시켜주기
+			location.href = "/user/sign_in_view";
+		} else {  // 실패
+			alert(data.errorMessage);
+		}
+		
+	}); 
+	
 	});
 });
 </script>	

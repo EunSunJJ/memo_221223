@@ -11,9 +11,17 @@ public class UserBO {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	
 	// input : id
 	// output : model그자체로
 	public User getUserLoginId(String loginId) {
 		return userMapper.selectUserLoginId(loginId);
+	}
+	
+	// input : loginId, password, name, email
+	// output :  int ★
+	public int addUser(String loginId, String password, String name, String email, String profileImagePath) {
+		return userMapper.insertUser(loginId, password, name, email, profileImagePath);
 	}
 }
