@@ -6,8 +6,8 @@ public class User {
 
 	// 필드
 	private int id;
-	private int loginId;
-	private int password;
+	private String loginId;
+	private String password;
 	private String name;
 	private String email;
 	private String profileImagePath;
@@ -21,16 +21,16 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getLoginId() {
+	public String getLoginId() {
 		return loginId;
 	}
-	public void setLoginId(int loginId) {
+	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 	public String getName() {
@@ -65,5 +65,4 @@ public class User {
 	}
 	
 	
-
 }

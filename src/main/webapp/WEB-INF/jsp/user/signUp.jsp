@@ -14,11 +14,11 @@
 				
 				<div class="form-group d-flex align-items-center">
 					<span class="sign-up-subject">아이디</span>
-					<input type="text" name="loginId" class="form-control col-7" placeholder="아이디를 입력해주세요">
-					<input type="button" name="loginIdCheckBtn" value="중복확인" class="btn btn-success">
+					<input type="text" id="loginId" name="loginId" class="form-control col-7" placeholder="아이디를 입력해주세요">
+					<input type="button" id="loginIdCheckBtn" name="loginIdCheckBtn" value="중복확인" class="btn btn-success">
 				</div>
 			
-				<%-- 아이디 체크 결과 --%>
+				<%-- 아이디 체크 결과 (보이지않게) --%>
 				<div>
 					<div id="idCheckLength" class="small text-danger d-none">ID를 4자 이상 입력해주세요.</div>
 					<div id="idCheckDuplicated" class="small text-danger d-none">이미 사용중인 ID입니다.</div>
@@ -59,10 +59,44 @@
 	</div>
 	
 <script>
-$(document).ready(function() {
-		// 중복확인 버튼 클릭
-	$('#loginIdCheckBtn').on('click', function() {
-		alert("확인");
+$(document).ready(function(){
+	$("#loginIdCheckBtn").on("click", function(){
+		// alert("확인")
+		
+		// 경고 문구 초기화 -> idCheckLength를 초기화 해주는 거야
+		$("idCheckLength").addClass("d-none");
+		$("idCheckDuplicated").addClass("d-none");
+		$("idCheckOk").addClass("d-none");
+		
+		let loginId = $("#loginId").val().trim();
+		
+		// 4자 미만이면 경고 문구 노출
+		if(loginId.length < 4) {
+			$("#idCheckLength").removeClass("d-none");
+			return;
+		}
+		
+		
+		// AJAX 통신 - 중복확인
+		$.ajax({
+			// request
+			type:"get" 
+			, url:"/user/is_duplicated_id"
+			, data:{"loginId":loginId}
+		
+			// response
+			, success:function(data) {  // call back 함수
+				if (data.result) {
+					// 중복이다
+					$("#idCheckDuplicated").removeClass("d-none");
+				} else {
+					// 사용 가능하다
+					$("#idCheckOk").removeClass("d-none");
+				}
+			}
+			
+			
+		});
 	});
 });
 </script>	
