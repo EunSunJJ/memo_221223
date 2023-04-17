@@ -24,4 +24,12 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	// 로그인 페이지
+	//   http://localhost/user/sign_in_view
+	@GetMapping("/sign_in_view")
+	public String signInView(Model model) {
+		model.addAttribute("view", "user/signIn");
+		return "template/layout";
+	}
+	
 }

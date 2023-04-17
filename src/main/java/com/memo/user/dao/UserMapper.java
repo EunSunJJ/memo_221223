@@ -17,4 +17,9 @@ public interface UserMapper {
 			@Param("email") String email,
 			@Param("profileImagePath") String profileImagePath);
 	
+
+	public User selectUserByLoginIdPassword(
+			@Param("loginId") String loginId, 
+			@Param("password") String password);
+	
 }

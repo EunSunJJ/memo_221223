@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.memo.common.EncryptUtils;
 import com.memo.user.bo.UserBO;
 import com.memo.user.model.User;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/user")
 @RestController
@@ -48,7 +52,14 @@ public class UserRestController {
 		return result;
 	}
 	
-	
+	/**
+	 * 회원가입 API
+	 * @param loginId
+	 * @param password
+	 * @param name
+	 * @param email
+	 * @return
+	 */
 	@PostMapping("/sign_up")
 	public Map<String, Object> signUp(// 파라미터들 받아오기
 			@RequestParam ("loginId") String loginId,
@@ -59,7 +70,7 @@ public class UserRestController {
 		// 비밀번호 해싱 - md5
 		// aaaa => dkssudgktpdy
 		// aaaa => dkssudgktpdy
-		
+		String hashedPassword = EncryptUtils.md5(password);
 		
 		// DB insert
 		userBO.addUser(loginId, password, name, email, email);
@@ -68,6 +79,48 @@ public class UserRestController {
 		result.put("code", 1);
 		result.put("result", "성공");
 		
+		return result;
+	}
+	
+	/**
+	 * 회원가입 API
+	 * @param loginId
+	 * @param password
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/sign_in")
+	
+	public Map<String, Object> signIn(
+			@RequestParam("loginId") String loginId, 
+			@RequestParam("password") String password, 
+			HttpServletRequest request) {
+		
+		// password hashing
+		String hashedPassword = EncryptUtils.md5(password);
+		
+		// select null or 1행 
+		User user = userBO.getUserByLoginIdPassword(loginId, hashedPassword);
+		
+		// 로그인이 되어있다는 처리
+		Map<String, Object> result = new HashMap<>();
+		if (user != null) {  // 로그인
+			result.put("code", 1);
+			result.put("result","성공");
+			
+			// + 세션에 유저 정보 담기 (로그인 상태 유지) - 정보 일부만 담어야 해!
+			// 비밀번호 같은 것 말고, 누구님 안녕하세요 = 유저정보를 보여주는 것
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userName", user.getName());
+			session.setAttribute("userLoginId", user.getLoginId());
+			
+		} else {   // 로그인 불가
+			result.put("code", 500);
+			result.put("errorMessage", "존재하지 않는 사용자 입니다");
+		}
+		
+		// 응답 끝
 		return result;
 	}
 }
