@@ -21,8 +21,8 @@ public class UserBO {
 	
 	// input : loginId, password, name, email
 	// output :  int ★
-	public int addUser(String loginId, String password, String name, String email, String profileImagePath) {
-		return userMapper.insertUser(loginId, password, name, email, profileImagePath);
+	public int addUser(String loginId, String password, String name, String email) {
+		return userMapper.insertUser(loginId, password, name, email);
 	}
 	
 	// input : loginId, password

@@ -73,7 +73,7 @@ public class UserRestController {
 		String hashedPassword = EncryptUtils.md5(password);
 		
 		// DB insert
-		userBO.addUser(loginId, password, name, email, email);
+		userBO.addUser(loginId, hashedPassword, name, email);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 1);
@@ -83,7 +83,7 @@ public class UserRestController {
 	}
 	
 	/**
-	 * 회원가입 API
+	 * 로그인 API
 	 * @param loginId
 	 * @param password
 	 * @param request

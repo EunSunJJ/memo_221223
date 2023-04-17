@@ -26,7 +26,6 @@
 				, `password`
 				, `name`
 				, `email`
-				, `profileImagePath`
 				, `createdAt`
 				, `updatedAt`
  		)
@@ -37,7 +36,6 @@
 			#{password},
 			#{name},
 			#{email},
-			#{profileImagePath},
 			NOW(),
 			NOW()
 			
