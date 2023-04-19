@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!-- 로고 -->
 <div>
-	MEMO 게시판
+	<h1>MEMO 게시판</h1>
 </div>
 
 <!-- 로그인 정보 -->
@@ -13,6 +13,8 @@
 			<a href="/user/sign_out">로그아웃</a>
 		</c:if> 
 		<c:if test="${empty userId}">
-			<a href="/user/sign_in_view">로그인</a>
+			<div>
+				<a href="/user/sign_in_view">로그인</a>
+			</div>
 		</c:if>
 	</div>

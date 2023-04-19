@@ -9,4 +9,25 @@
 		FROM
 			`post`
 	</select>
+	
+	<insert id="insertPost" parameterType="map">
+		INSERT INTO `post`
+		(
+			`userId`
+			, `subject`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		)
+		
+	  	VALUES
+		(
+			#{userId},
+			#{subject},
+			#{imagePath},
+			NOW(),
+			NOW()
+		)
+		
+	</insert>
 </mapper>

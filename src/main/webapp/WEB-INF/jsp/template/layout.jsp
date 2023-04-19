@@ -18,7 +18,7 @@
 
 <body>
 	<div id="wrap">
-		<header class="d-flex justify-content-center align-items-center">
+		<header class="d-flex align-items-center">
 			<%-- 상대 경로 --%>
 			<jsp:include page="../include/header.jsp"/>
 		</header>
