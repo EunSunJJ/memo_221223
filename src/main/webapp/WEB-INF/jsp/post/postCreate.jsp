@@ -46,7 +46,7 @@ $(document).ready(function(){
 		let file = $("#file").val();
 		// 이미지 경로 = C:\fakepath\chipmunk-3959206__340.jpg
 		
-		// validation
+		// validation -> 제목만 필수이기 떄문에 
 		if (!subject) {
 			alert("제목을 입력하세요");
 			return;

@@ -24,6 +24,7 @@ public class PostController {
 		}
 		
 		model.addAttribute("view", "post/postList");
+		model.addAttribute("postList", "★");
 		return "template/layout";
 	}
 	

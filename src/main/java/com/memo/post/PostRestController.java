@@ -33,12 +33,17 @@ public class PostRestController {
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// DB insert -> BO만들기부터 시작
-		postBO.addPost(userId, userLoginId, subject, contetn, file);
+		int rowCount = postBO.addPost(userId, userLoginId, subject, contetn, file);
 		
 		// 응답
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 1);
-		result.put("result", "성공");
-		return result;
+		if (rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "메모를 저장하지 못했습니다");
+		}
+			return result;
 	}
 }
